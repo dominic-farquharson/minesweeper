@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // gen 10 x 10 board
   const board = [], solution = [];
   const length = 10 - Math.floor(Math.random() * 6);
-  let tries = 5, correctMoves = 0, playerMoves = 0;
+  let tries = 2, correctMoves = 0, playerMoves = 0;
   
   for(let i = 0; i < length; i++) {
     const arr = [], sol = [];
@@ -88,23 +88,46 @@ document.addEventListener('DOMContentLoaded', function() {
     /*
       count the number of mines next to an empty cell. 
       Check; left, right, up, down, diagonal
+
+      future: check if cell being checked is at the edge of board
     */
 
+    
+    
     let x = 0;
+
+   
     
     // checking row above for a mine (subtracting two since mines are in array, -1 represents element 0)
-    if(solution[row - 2][col - 1]) {
-      x+= 1
-    }
-
+    const checkUp = (row - 2 > 0) ? solution[row - 2][col - 1] : null;
     // checking row below (row represents the preceding row since row - 1 represents the actual row)
-    if(solution[row][col - 1]) {
-      x+= 1
+    const checkDown = (row < solution.length - 1) ? solution[row][col - 1] : null;
+    // checking column to the right of the mine
+    const checkRight = solution[row - 1][col];
+    // checking column to the left of the mine
+    const checkLeft = (row - 1 > solution.length && col - 2 ) ? solution[row - 1][col - 2] : null;
+    
+    if(checkUp && checkUp !== undefined) { 
+      x += 1
     }
 
-    // check top and bottom
-    return !x ? '' : x;
+    if(checkDown && checkDown !== undefined) {
+      console.log((solution[row ][col - 1]))
+      x += 1
+    }
 
+    if(checkRight && checkRight !== undefined) {
+      console.log((solution[row - 1][col]))
+      x += 1
+    }
+
+    if(checkLeft && checkLeft !== undefined) {
+      console.log((solution[row - 1][col - 2]))
+      x += 1
+    }
+
+    
+    return !x ? '' : x;
   }
 
   // match player moves with num of correct moves, playermoves incremented when they don't hit a mine
@@ -116,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function displayMines() {
     document.querySelectorAll('.cell').forEach(el => {
       const { row, col } = JSON.parse(el.dataset.location)
-      
-      el.innerText = solution[row - 1][col -1];
+
+      el.innerText = solution[row - 1][col -1] ? 'X' : checkCell(row, col);
 
     })
   }

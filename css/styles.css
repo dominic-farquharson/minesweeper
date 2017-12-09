@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+.cell {
+  border: 1px black solid;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+
+}
+
+.row {
+
+}

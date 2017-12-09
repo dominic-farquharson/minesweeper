@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // gen 10 x 10 board
   const board = [], solution = [];
   const length = 10 - Math.floor(Math.random() * 6);
-  let tries = 2, correctMoves = 0, playerMoves = 0;
+  let tries = 5, correctMoves = 0, playerMoves = 0;
   
   for(let i = 0; i < length; i++) {
     const arr = [], sol = [];
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // hit a mine
         if(solution[row - 1][col - 1]) {
           
-          this.innerText = 'X'
+          this.classList.add('mine');
           tries -= 1;
           lives.innerText = tries;
 
@@ -92,12 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
       future: check if cell being checked is at the edge of board
     */
 
-    
-    
     let x = 0;
 
-   
-    
     // checking row above for a mine (subtracting two since mines are in array, -1 represents element 0)
     const checkUp = (row - 2 > 0) ? solution[row - 2][col - 1] : null;
     // checking row below (row represents the preceding row since row - 1 represents the actual row)
@@ -140,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.cell').forEach(el => {
       const { row, col } = JSON.parse(el.dataset.location)
 
-      el.innerText = solution[row - 1][col -1] ? 'X' : checkCell(row, col);
+      solution[row - 1][col -1] ? el.classList.add('mine') : el.innerText = checkCell(row, col);
 
     })
   }

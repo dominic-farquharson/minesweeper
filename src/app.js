@@ -1,14 +1,15 @@
 console.log('app.js is connected')
 
 document.addEventListener('DOMContentLoaded', function() {
-  // gen 5 x 5 board
+  // gen 10 x 10 board
   const board = [], solution = [];
+  const length = 10 - Math.floor(Math.random() * 6);
   let tries = 5, correctMoves = 0, playerMoves = 0;
   
-  for(let i = 0; i < 5; i++) {
+  for(let i = 0; i < length; i++) {
     const arr = [], sol = [];
-    for(let x = 0; x < 5; x ++) {
-      let rand = ( Math.floor(Math.random() * 5)) // random number from 0 to 4
+    for(let x = 0; x < length; x ++) {
+      let rand = ( Math.floor(Math.random() * length)) // random number from 0 to 4
       console.log(`random number for row: ${x + 1}`, rand)
       // arr.push((`${i},${x}`))
       arr.push({row: i + 1, col: x + 1})
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // hit a mine
         if(solution[row - 1][col - 1]) {
           
-          this.innerText = 'X'
+          this.innerText = checkCell(row, col)
           tries -= 1;
           lives.innerText = tries;
 
@@ -81,6 +82,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     container.appendChild(row);
   })
+
+  function checkCell(row, col) {
+    /*
+      count the number of mines next to an empty cell. 
+      Check; left, right, up, down, diagonal
+    */
+
+    // check top and bottom
+    return 'X'
+
+  }
 
   // match player moves with num of correct moves, playermoves incremented when they don't hit a mine
   function checkWin(playerMoves, correctMoves) {

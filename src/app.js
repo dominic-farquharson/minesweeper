@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // hit a mine
         if(solution[row - 1][col - 1]) {
           
-          this.innerText = checkCell(row, col)
+          this.innerText = 'X'
           tries -= 1;
           lives.innerText = tries;
 
@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else { // did not hit a mine
 
           this.style.background = 'red'; 
+          this.innerText = checkCell(row, col);
           playerMoves +=1 
 
           if(checkWin(playerMoves, correctMoves)) {
@@ -89,8 +90,20 @@ document.addEventListener('DOMContentLoaded', function() {
       Check; left, right, up, down, diagonal
     */
 
+    let x = 0;
+    
+    // checking row above for a mine (subtracting two since mines are in array, -1 represents element 0)
+    if(solution[row - 2][col - 1]) {
+      x+= 1
+    }
+
+    // checking row below (row represents the preceding row since row - 1 represents the actual row)
+    if(solution[row][col - 1]) {
+      x+= 1
+    }
+
     // check top and bottom
-    return 'X'
+    return !x ? '' : x;
 
   }
 
